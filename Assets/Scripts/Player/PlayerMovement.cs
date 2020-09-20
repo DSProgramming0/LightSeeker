@@ -83,7 +83,11 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        if (!isGrounded)
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
+
         controller.Move(velocity * Time.deltaTime);
     }
 }
