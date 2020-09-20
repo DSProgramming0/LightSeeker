@@ -34,10 +34,10 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+        //if (isGrounded && velocity.y < 0)
+        //{
+        //    velocity.y = -2f;
+        //}
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -85,9 +85,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isGrounded)
         {
+            animHook.toggleIK(0f);
             velocity.y += gravity * Time.deltaTime;
         }
 
-        controller.Move(velocity * Time.deltaTime);
+        if (!isGrounded)
+        {
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 }

@@ -2829,9 +2829,9 @@ GameObject:
   - component: {fileID: 613851434}
   - component: {fileID: 613851433}
   - component: {fileID: 613851432}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Walkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2978,7 +2978,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617308912}
-  m_LocalRotation: {x: 0.21821895, y: -0.5362583, z: 0.14587565, w: 0.80220187}
+  m_LocalRotation: {x: 0.21821892, y: -0.5362582, z: 0.1458756, w: 0.80220187}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5394,7 +5394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145913769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.178, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4144, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1715952411}
@@ -6200,7 +6200,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305018672}
-  m_LocalRotation: {x: 0.21821895, y: -0.5362583, z: 0.14587565, w: 0.80220187}
+  m_LocalRotation: {x: 0.21821892, y: -0.5362582, z: 0.1458756, w: 0.80220187}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7982,7 +7982,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.218219, y: -0.53625834, z: 0.14587568, w: 0.80220187}
+  m_LocalRotation: {x: 0.21821894, y: -0.5362582, z: 0.14587562, w: 0.8022019}
   m_LocalPosition: {x: 10.581099, y: 2.4359574, z: -9.669934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8228,7 +8228,7 @@ GameObject:
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8288,7 +8288,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   gravity: -9.81
-  groundDistance: 0.4
+  groundDistance: 0.5
   speed: 0
   speedGain: 8
   walkToIdleGain: 5

@@ -15,5 +15,10 @@ public class AnimatorHook : MonoBehaviour
     {
         anim.SetFloat("Speed", _speed);
     }
-   
+
+    public void toggleIK(float _IKValue)
+    {
+        anim.SetFloat("IKLeftFootWeight", _IKValue);
+        anim.SetFloat("IKRightFootWeight", _IKValue);
+    }
 }
