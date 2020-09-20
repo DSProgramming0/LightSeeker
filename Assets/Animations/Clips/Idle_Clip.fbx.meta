@@ -47,17 +47,67 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
+      bodyMask: 01000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
+      curves:
+      - name: IKRightFootWeight
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: -0.0046387315
+            value: 1.0024209
+            inSlope: -0.0014725656
+            outSlope: -0.0014725656
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.99529177
+          - serializedVersion: 3
+            time: 1.0015719
+            value: 1.0024114
+            inSlope: 0.0018346203
+            outSlope: 0.0018346203
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.066834435
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      - name: IKLeftFootWeight
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: -0.008739531
+            value: 1.0011697
+            inSlope: -0.0014725656
+            outSlope: -0.0014725656
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.99529177
+          - serializedVersion: 3
+            time: 1.0065768
+            value: 1.0014348
+            inSlope: 0.0018346203
+            outSlope: 0.0018346203
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.066834435
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
       events: []
       transformMask: []
       maskType: 3
