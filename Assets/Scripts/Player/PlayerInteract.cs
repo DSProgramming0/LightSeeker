@@ -29,9 +29,9 @@ public class PlayerInteract : MonoBehaviour
         Debug.DrawLine(cameraAim.origin, cameraAim.GetPoint(20f), Color.green);
         float cameraDistance = cameraHit.distance;
 
-        if (Physics.Raycast(cameraAim, out cameraHit))
+        if (Physics.Raycast(cameraAim, out cameraHit)) 
         {
-            Vector3 cameraHitPoint = cameraAim.GetPoint(20f);
+            Vector3 cameraHitPoint = cameraHit.point;
 
             if (cameraHit.transform.GetComponent<InteractableObj>()) //An interactable objects has been targets and can now be interacted with
             {

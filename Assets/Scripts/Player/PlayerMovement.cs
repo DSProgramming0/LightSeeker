@@ -13,8 +13,14 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public LayerMask groundMask;
     public float gravity = -9.81f;
-    public float groundDistance = 0.8f;
+    public float groundDistance = 0.45f;
+    [SerializeField] private float slopeForceRayLength;
+    [SerializeField] private float adjustmentSmoothTime;
+    [SerializeField] private float moveGroundCheckDist;
 
+    [SerializeField] private float distToGroundCheck;
+    [SerializeField] private float distMax;
+    [SerializeField] private float distMin;
 
     [SerializeField] private float speed;
     private float walkSpeed = 2f;
@@ -30,14 +36,28 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+       
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded)
+        {
+            MoveGroundCheck();
+        }
 
-        //if (isGrounded && velocity.y < 0)
-        //{
-        //    velocity.y = -2f;
-        //}
+        Debug.DrawLine(new Vector3(transform.position.x,transform.position.y +.93f, transform.position.z), groundCheck.position, Color.red);
+        distToGroundCheck = transform.position.y + .93f - groundCheck.position.y;
+        Debug.Log("distToGroundCheck "+ distToGroundCheck);
+        if(distToGroundCheck < 0.79f)
+        {
+            Debug.Log("adjusting...");
+
+            transform.position = new Vector3(transform.position.x, transform.position.y + distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
+        }
+        else if(distToGroundCheck > 0.85f)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
+        }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -87,11 +107,42 @@ public class PlayerMovement : MonoBehaviour
         {
             animHook.toggleIK(0f);
             velocity.y += gravity * Time.deltaTime;
+
+            controller.Move(velocity * Time.deltaTime);
+        }            
+    }
+
+    private void MoveGroundCheck()
+    {
+        RaycastHit hit;
+        Debug.DrawLine(groundCheck.position, groundCheck.position + (Vector3.down * moveGroundCheckDist), Color.red);
+
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out hit, moveGroundCheckDist, groundMask))
+        {
+            Debug.Log("Hitting layer");
+            groundCheck.position = new Vector3(groundCheck.position.x, hit.point.y + 0.1f, groundCheck.position.z);
         }
 
-        if (!isGrounded)
+        if(Physics.Raycast(groundCheck.position, Vector3.up, out hit, 6f, groundMask))
         {
-            controller.Move(velocity * Time.deltaTime);
+            Debug.Log("BelowGround");
         }
+    }
+
+    private bool OnSlope()
+    {
+        RaycastHit hit;
+        Debug.DrawLine(groundCheck.position, groundCheck.position + (Vector3.down * slopeForceRayLength), Color.red);
+
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out hit, slopeForceRayLength))
+        {
+            if (hit.transform.rotation.z != 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 }
