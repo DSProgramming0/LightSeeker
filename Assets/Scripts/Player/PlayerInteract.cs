@@ -1,17 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    private PlayerMovement player;
     [SerializeField] private Camera cam;
+    [SerializeField] private CinemachineFreeLook vCam;
     [SerializeField] private GameObject objectInSight;
     [SerializeField] private GameObject previousObj;
+
+    private float originalFOV;
+    [SerializeField] private float focusedFOV;
+    [SerializeField] private float focusSmoothing;
 
     [SerializeField] private float InteractDistance;
     [SerializeField] private bool canInteract = false;
     [SerializeField] private LayerMask lookAtLayer;
     [SerializeField] private float interactDistance;
+
+    private void Start()
+    {
+        player = GetComponent<PlayerMovement>();
+        originalFOV = vCam.m_Lens.FieldOfView;
+    }
 
     private void InteractWithObj()
     {
@@ -36,7 +49,6 @@ public class PlayerInteract : MonoBehaviour
             if (cameraHit.transform.GetComponent<InteractableObj>()) //An interactable objects has been targets and can now be interacted with
             {
                 float dist = Vector3.Distance(transform.position, cameraHit.transform.position);
-                Debug.Log(dist);
 
                 if(dist <= InteractDistance)
                 {
@@ -100,6 +112,21 @@ public class PlayerInteract : MonoBehaviour
             }
 
             return cameraHitPoint;
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButton(1) && player.isRunning == false)
+        {
+            Debug.Log("Holding down right mouse button");
+            float fovTargetValue = Mathf.Lerp(vCam.m_Lens.FieldOfView, focusedFOV, focusSmoothing * Time.deltaTime);
+            vCam.m_Lens.FieldOfView = fovTargetValue;
+        }
+        else
+        {
+            float fovTargetValue = Mathf.Lerp(vCam.m_Lens.FieldOfView, originalFOV, focusSmoothing * Time.deltaTime);
+            vCam.m_Lens.FieldOfView = fovTargetValue;
         }
     }
 }

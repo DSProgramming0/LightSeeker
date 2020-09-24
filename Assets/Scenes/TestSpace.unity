@@ -4780,7 +4780,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 47.803146
     m_SpeedMode: 0
-    m_MaxSpeed: 190
+    m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -6282,7 +6282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305018672}
-  m_LocalRotation: {x: 0.017005414, y: 0.4186474, z: -0.00784099, w: 0.90795577}
+  m_LocalRotation: {x: 0.017005391, y: 0.41864744, z: -0.007840982, w: 0.90795577}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8064,7 +8064,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.017005417, y: 0.41864744, z: -0.007840992, w: 0.90795577}
+  m_LocalRotation: {x: 0.017005393, y: 0.41864747, z: -0.007840983, w: 0.90795577}
   m_LocalPosition: {x: 8.332891, y: 1.7243809, z: -11.012143}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8365,12 +8365,20 @@ MonoBehaviour:
   controller: {fileID: 1715952412}
   cam: {fileID: 1687258585}
   animHook: {fileID: 1715952415}
-  groundCheck: {fileID: 1145913770}
+  speed: 0
+  speedGain: 8
+  walkToIdleGain: 5
+  idleToWalkGain: 4
+  walkToRunGain: 2.5
+  turnSmoothTime: 0.1
+  isJumping: 0
+  jumpHeight: 5
   isGrounded: 0
+  groundCheck: {fileID: 1145913770}
   groundMask:
     serializedVersion: 2
     m_Bits: 768
-  gravity: -4
+  gravity: -10
   groundDistance: 0.2
   slopeForceRayLength: 0.23
   adjustmentSmoothTime: 0.1
@@ -8378,12 +8386,8 @@ MonoBehaviour:
   distToGroundCheck: 0
   distMax: 25
   distMin: 5
-  speed: 0
-  speedGain: 8
-  walkToIdleGain: 5
-  idleToWalkGain: 4
-  walkToRunGain: 2.5
-  turnSmoothTime: 0.1
+  stopPlayerMovement: 0
+  isRunning: 0
 --- !u!114 &1715952414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8447,8 +8451,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1687258584}
+  vCam: {fileID: 1045489374}
   objectInSight: {fileID: 0}
   previousObj: {fileID: 0}
+  focusedFOV: 25
+  focusSmoothing: 2
   InteractDistance: 2.5
   canInteract: 0
   lookAtLayer:
