@@ -10,7 +10,15 @@ public class AnimatorHook : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
-    
+
+    void Update()
+    {
+        if(PlayerManager.instance.getWorldState() == PlayerWorldState.INCINEMATIC)
+        {
+            setSpeed(2);
+        }
+    }
+
     public void setSpeed(float _speed)
     {
         anim.SetFloat("Speed", _speed);

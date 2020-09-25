@@ -27,8 +27,15 @@ public class IKController : MonoBehaviour
     {
         if (anim)
         {
-            anim.SetLookAtWeight(1);
-            anim.SetLookAtPosition(lookObj);
+            if(PlayerManager.instance.getWorldState() != PlayerWorldState.INCINEMATIC) //Disables HeadIk if in a cinematic
+            {
+                anim.SetLookAtWeight(1);
+                anim.SetLookAtPosition(lookObj);
+            }
+            else
+            {
+                anim.SetLookAtWeight(0);
+            }
 
             anim.SetIKPositionWeight(AvatarIKGoal.LeftFoot, anim.GetFloat("IKLeftFootWeight"));
             anim.SetIKRotationWeight(AvatarIKGoal.LeftFoot, anim.GetFloat("IKLeftFootWeight"));

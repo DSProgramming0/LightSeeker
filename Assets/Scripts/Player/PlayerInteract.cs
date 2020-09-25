@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    private PlayerMovement player;
+    private PlayerManager _playerManager;
     [SerializeField] private Camera cam;
     [SerializeField] private CinemachineFreeLook vCam;
     [SerializeField] private GameObject objectInSight;
@@ -22,7 +22,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<PlayerMovement>();
+        _playerManager = GetComponent<PlayerManager>();
         originalFOV = vCam.m_Lens.FieldOfView;
     }
 
@@ -42,91 +42,100 @@ public class PlayerInteract : MonoBehaviour
         Debug.DrawLine(cameraAim.origin, cameraAim.GetPoint(20f), Color.green);
         float cameraDistance = cameraHit.distance;
 
-        if (Physics.Raycast(cameraAim, out cameraHit)) 
+        if (_playerManager.getWorldState() == PlayerWorldState.FREECONTROL)
         {
-            Vector3 cameraHitPoint = cameraHit.point;
-
-            if (cameraHit.transform.GetComponent<InteractableObj>()) //An interactable objects has been targets and can now be interacted with
+            if (Physics.Raycast(cameraAim, out cameraHit))
             {
-                float dist = Vector3.Distance(transform.position, cameraHit.transform.position);
+                Vector3 cameraHitPoint = cameraHit.point;
 
-                if(dist <= InteractDistance)
+                if (cameraHit.transform.GetComponent<InteractableObj>()) //An interactable objects has been targets and can now be interacted with
                 {
-                    canInteract = true;
-                }
-                else
-                {
-                    canInteract = false;
-                }
+                    float dist = Vector3.Distance(transform.position, cameraHit.transform.position);
 
-                if (canInteract)
-                {
-                    objectInSight = cameraHit.transform.gameObject; //Setting object as currentObject in sight
-                    previousObj = objectInSight; //Keeping track of object so that the material can be swapped after currentObj becomes null
-
-                    objectInSight.GetComponent<InteractableObj>().HighlightObject(true);
-                    if (Input.GetKeyDown(KeyCode.E) && objectInSight != null)
+                    if (dist <= InteractDistance)
                     {
-                        InteractWithObj();
+                        canInteract = true;
+                    }
+                    else
+                    {
+                        canInteract = false;
                     }
 
-                }
-                else
-                {
+                    if (canInteract)
+                    {
+                        objectInSight = cameraHit.transform.gameObject; //Setting object as currentObject in sight
+                        previousObj = objectInSight; //Keeping track of object so that the material can be swapped after currentObj becomes null
+
+                        objectInSight.GetComponent<InteractableObj>().HighlightObject(true);
+                        if (Input.GetKeyDown(KeyCode.E) && objectInSight != null)
+                        {
+                            InteractWithObj();
+                        }
+
+                    }
+                    else
+                    {
+                        return cameraHitPoint;
+                    }
+
                     return cameraHitPoint;
                 }
+                else //If we are still looking at something but it is not an interactable Object
+                {
+                    //Debug.Log("Hitting " + cameraHit.transform.name);
 
+                    if (previousObj != null)
+                    {
+                        previousObj.GetComponent<InteractableObj>().HighlightObject(false); // switch to standard material
+                        objectInSight = null;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.E) && objectInSight == null)
+                    {
+                        Debug.Log("Look at an object to select it!");
+                    }
+                }
                 return cameraHitPoint;
             }
-            else //If we are still looking at something but it is not an interactable Object
+            else //If raycast is going into nothingness/Skybox
             {
-                //Debug.Log("Hitting " + cameraHit.transform.name);
+                Vector3 cameraHitPoint = cameraAim.GetPoint(20f);
 
+                Physics.Raycast(transform.position + new Vector3(0f, 1.8f, 0f), cameraHitPoint - transform.position - new Vector3(0f, 1.8f, 0f), 100f);
+                objectInSight = null;
                 if (previousObj != null)
                 {
-                    previousObj.GetComponent<InteractableObj>().HighlightObject(false); // switch to standard material
-                    objectInSight = null;
+                    previousObj.GetComponent<InteractableObj>().HighlightObject(false);
                 }
 
                 if (Input.GetKeyDown(KeyCode.E) && objectInSight == null)
                 {
                     Debug.Log("Look at an object to select it!");
                 }
+
+                return cameraHitPoint;
             }
-            return cameraHitPoint;
         }
-        else //If raycast is going into nothingness/Skybox
+        else
         {
-            Vector3 cameraHitPoint = cameraAim.GetPoint(20f);
-
-            Physics.Raycast(transform.position + new Vector3(0f, 1.8f, 0f), cameraHitPoint - transform.position - new Vector3(0f, 1.8f, 0f), 100f);
-            objectInSight = null;
-            if(previousObj != null)
-            {
-                previousObj.GetComponent<InteractableObj>().HighlightObject(false);
-            }
-
-            if (Input.GetKeyDown(KeyCode.E) && objectInSight == null)
-            {
-                Debug.Log("Look at an object to select it!");
-            }
-
-            return cameraHitPoint;
-        }
+            return Vector3.zero;
+        }        
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(1) && player.isRunning == false)
+        if (Input.GetMouseButton(1) && _playerManager.getCurrentMovmementState() != PlayerMovementStates.RUNNING && _playerManager.getWorldState() == PlayerWorldState.FREECONTROL)
         {
             Debug.Log("Holding down right mouse button");
+            _playerManager.setInteractState(PlayerInteractState.FOCUSING);
             float fovTargetValue = Mathf.Lerp(vCam.m_Lens.FieldOfView, focusedFOV, focusSmoothing * Time.deltaTime);
             vCam.m_Lens.FieldOfView = fovTargetValue;
         }
         else
         {
+            _playerManager.setInteractState(PlayerInteractState.NOTFOCUSING);
             float fovTargetValue = Mathf.Lerp(vCam.m_Lens.FieldOfView, originalFOV, focusSmoothing * Time.deltaTime);
             vCam.m_Lens.FieldOfView = fovTargetValue;
         }
-    }
+    }  
 }
