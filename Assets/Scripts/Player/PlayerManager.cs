@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Playables;
 
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
-    [SerializeField] private Transform dollyCart;
+
     [SerializeField] private CinemachineFreeLook MainvCam;
-    [SerializeField] private CinemachineVirtualCamera cinematicCam;
-    [SerializeField] private LayerMask cinematicCameraLayer;
+
     [SerializeField] private GameObject playerBody;
 
     public PlayerMovementStates playerMovementState;
@@ -30,37 +30,12 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
-
-        GameEvents.instance.onCinematicTriggerEnter += pausePlayerCinematic;
-        GameEvents.instance.onCinematicTriggerExit += unPausePlayerCinematic;    
+        instance = this;       
 
         playerMovement = GetComponent<PlayerMovement>();
         playerInteraction = GetComponent<PlayerInteract>();
         animHook = GetComponent<AnimatorHook>();
-    }    
-
-    public void pausePlayerCinematic()
-    {
-        pausePlayer(true, false);
-        playerWorldState = PlayerWorldState.INCINEMATIC;
-
-        transform.parent = dollyCart; //Moves playerPos to the dollyCaet Position
-        transform.position = transform.parent.position - new Vector3(0,1,0);
-        transform.rotation = Quaternion.Euler(transform.parent.rotation.x, transform.parent.rotation.y, transform.parent.rotation.z);
-
-        cinematicCam.Priority = 15; //Switches camera to cinematic camera
-    }
-
-    public void unPausePlayerCinematic()
-    {
-        pausePlayer(false, false);
-        playerWorldState = PlayerWorldState.FREECONTROL;
-
-        transform.parent = null;
-
-        cinematicCam.Priority = 8; //Switches to mainCam
-    }
+    }   
 
     public void setMovementState(PlayerMovementStates _state)
     {
@@ -117,7 +92,6 @@ public class PlayerManager : MonoBehaviour
             MainvCam.m_YAxis.m_InputAxisName = "Mouse Y";
             playerBody.SetActive(true);
         }
-
     }
 }
 

@@ -13,10 +13,7 @@ public class AnimatorHook : MonoBehaviour
 
     void Update()
     {
-        if(PlayerManager.instance.getWorldState() == PlayerWorldState.INCINEMATIC)
-        {
-            setSpeed(2);
-        }
+        
     }
 
     public void setSpeed(float _speed)
