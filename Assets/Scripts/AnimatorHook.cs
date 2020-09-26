@@ -38,4 +38,8 @@ public class AnimatorHook : MonoBehaviour
         anim.SetBool("isGrounded", _isGrounded);
     }
 
+    public void setInteractBool(bool _isInteracting)
+    {
+        anim.SetBool("Interacting", _isInteracting);
+    }
 }

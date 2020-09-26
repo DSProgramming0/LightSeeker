@@ -19,6 +19,8 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private bool canInteract = false;
     [SerializeField] private LayerMask lookAtLayer;
     [SerializeField] private float interactDistance;
+    [SerializeField] private float wallRevealDistance;
+    [SerializeField] private float revealingTimer;
 
     private void Start()
     {
@@ -80,10 +82,43 @@ public class PlayerInteract : MonoBehaviour
 
                     return cameraHitPoint;
                 }
+                else if (cameraHit.transform.GetComponent<HiddenMessage>() && _playerManager.getInteractState() == PlayerInteractState.FOCUSING)
+                {
+                    float dist = Vector3.Distance(transform.position, cameraHit.transform.position);
+                    HiddenMessage secretMessageWall = cameraHit.transform.GetComponent<HiddenMessage>();
+
+                    if (dist <= wallRevealDistance)
+                    {
+                        canInteract = true;
+                    }
+                    else
+                    {
+                        canInteract = false;
+                    }
+
+                    if (canInteract)
+                    {
+                        if(secretMessageWall.messageRevealed == false)
+                        {
+                            revealingTimer += Time.deltaTime;
+
+                            if (revealingTimer > 3f)
+                            {
+                                secretMessageWall.revealMessage();
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("You have already discovered the message on " + secretMessageWall._name);
+                            revealingTimer = 0;
+                        }                        
+                    }
+                }
                 else //If we are still looking at something but it is not an interactable Object
                 {
                     //Debug.Log("Hitting " + cameraHit.transform.name);
-
+                    revealingTimer = 0;
+                    canInteract = false;
                     if (previousObj != null)
                     {
                         previousObj.GetComponent<InteractableObj>().HighlightObject(false); // switch to standard material
@@ -103,6 +138,9 @@ public class PlayerInteract : MonoBehaviour
 
                 Physics.Raycast(transform.position + new Vector3(0f, 1.8f, 0f), cameraHitPoint - transform.position - new Vector3(0f, 1.8f, 0f), 100f);
                 objectInSight = null;
+                canInteract = false;
+                revealingTimer = 0;
+
                 if (previousObj != null)
                 {
                     previousObj.GetComponent<InteractableObj>().HighlightObject(false);
@@ -126,7 +164,6 @@ public class PlayerInteract : MonoBehaviour
     {
         if (Input.GetMouseButton(1) && _playerManager.getCurrentMovmementState() != PlayerMovementStates.RUNNING && _playerManager.getWorldState() == PlayerWorldState.FREECONTROL)
         {
-            Debug.Log("Holding down right mouse button");
             _playerManager.setInteractState(PlayerInteractState.FOCUSING);
             float fovTargetValue = Mathf.Lerp(vCam.m_Lens.FieldOfView, focusedFOV, focusSmoothing * Time.deltaTime);
             vCam.m_Lens.FieldOfView = fovTargetValue;

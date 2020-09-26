@@ -17,7 +17,11 @@ public class CinematicController : MonoBehaviour
     [SerializeField] private PlayableDirector currentCinematicDirector;
     [SerializeField] private float cinematicMovementSpeed;
     [SerializeField] private float timeIntoAnimation;
+    [SerializeField] private  float interactHoldDownTime;
     [SerializeField] private bool cinematicMovementStopped;
+    [SerializeField] private bool interactKeyPressRequired;
+    private bool interactKeyPressSet = false;
+    private bool lightBeamActivated = false;
 
     void Awake()
     {
@@ -53,9 +57,42 @@ public class CinematicController : MonoBehaviour
 
             if(currentCinematicDirector.time >= currentCinematicDirector.duration - 1f) //Starts playing beam of light effect before end of animation
             {
-                Debug.Log("Cinematic Over");
+                Debug.Log("Reached light beam");
                 StartCoroutine(playFreeTheLightEffect());
             }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                if (interactKeyPressRequired)
+                {
+                    interactHoldDownTime += Time.deltaTime;
+                    animHook.setInteractBool(true);
+
+                    if (interactHoldDownTime >= 3f)
+                    {
+                        //PLAYER CAN LET GO OF INTERACT KEY HERE
+                        interactKeyPressRequired = false; //Interact Animation still plays 
+                        lightBeamActivated = true;
+                    }
+                }                           
+            }
+            else if (lightBeamActivated)
+            {
+                interactHoldDownTime = 0; 
+                animHook.setInteractBool(true);
+            }
+            else
+            {
+                interactHoldDownTime = 0; //If player lets go of interact before complete
+                animHook.setInteractBool(false);
+            }          
+        }
+        else
+        {
+            interactKeyPressSet = false;
+            lightBeamActivated = false;
+            interactKeyPressRequired = false; //If player is not in a cinematic/ Safety net if statement
+            animHook.setInteractBool(false);
         }
     }
 
@@ -90,10 +127,33 @@ public class CinematicController : MonoBehaviour
         StartCoroutine(resetCinematicComponenets());
     }
 
+    private void setInteractState()
+    {
+        interactKeyPressRequired = true;
+        interactKeyPressSet = true;
+    }
+
     private IEnumerator playFreeTheLightEffect() //Gives times to play effect / waitForSeconds should be changed depending on lenght of effect
     {
+        animHook.setSpeed(0F); //Lerp?
         cinematicMovementStopped = true;
-        yield return new WaitForSeconds(3f);
+        if(interactKeyPressSet == false)
+        {
+            setInteractState();
+        }
+
+        while (interactKeyPressRequired) //Waiting for player input to activate effects
+        {
+            Debug.Log("Requires key press");
+            yield return null;
+        }
+
+        //PLAY EFFECTS HERE
+        interactKeyPressRequired = false;
+
+        yield return new WaitForSeconds(4f);
+
+        animHook.setInteractBool(false);
         GameEvents.instance.CinematicTriggerExit();
         cinematicMovementStopped = false;
 
