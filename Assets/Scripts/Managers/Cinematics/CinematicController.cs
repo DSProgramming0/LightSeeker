@@ -120,25 +120,6 @@ public class CinematicController : MonoBehaviour
         StartCoroutine(setCinematicPosition());
     }
 
-    private IEnumerator setCinematicPosition() //Delays palyer movement until blackout screen has unfaded and player pos is set in the cinematic dolly cart
-    {
-        cinematicMovementStopped = true;
-        yield return new WaitForSeconds(.2f);
-        currentCinematicCam.Priority = 15; //Switches camera to cinematic camera
-        currentCinematicDirector.Play();
-
-        Debug.Log("Calling");
-
-        player.transform.parent = currentDollyCart.transform; //Moves playerPos to the dollyCaet Position
-        player.transform.position = player.transform.parent.position - new Vector3(0, 1, 0);
-        player.transform.rotation = Quaternion.Euler(player.transform.parent.rotation.x, player.transform.parent.rotation.y, player.transform.parent.rotation.z);
-
-        yield return new WaitForSeconds(1f);
-        cinematicMovementStopped = false;
-
-        StopCoroutine(setCinematicPosition());
-    }
-
     public void unPausePlayerCinematic() //Resetting values of the cinematic Controller and giving the player control
     {
         PlayerManager.instance.setWorldState(PlayerWorldState.FREECONTROL);
@@ -147,6 +128,23 @@ public class CinematicController : MonoBehaviour
 
         StartCoroutine(resetCinematicComponenets());
     }
+
+    private IEnumerator setCinematicPosition() //Delays palyer movement until blackout screen has unfaded and player pos is set in the cinematic dolly cart
+    {
+        cinematicMovementStopped = true;
+        yield return new WaitForSeconds(.2f);
+        currentCinematicCam.Priority = 15; //Switches camera to cinematic camera
+        currentCinematicDirector.Play();
+        
+        player.transform.parent = currentDollyCart.transform; //Moves playerPos to the dollyCaet Position
+        player.transform.position = player.transform.parent.position - new Vector3(0, 1, 0);
+        player.transform.rotation = Quaternion.Euler(player.transform.parent.rotation.x, player.transform.parent.rotation.y, player.transform.parent.rotation.z);
+
+        yield return new WaitForSeconds(1f);
+        cinematicMovementStopped = false;
+
+        StopCoroutine(setCinematicPosition());
+    } 
 
     private void setInteractState()
     {
@@ -175,10 +173,12 @@ public class CinematicController : MonoBehaviour
 
         yield return new WaitForSeconds(3f); //Whilst activate animation is playing
         UIManager.instance.startFade(5f, true);
+
         yield return new WaitForSeconds(1f); //Whilst fading move pos
         player.transform.position = currentPlayerResetPos.position;
         player.transform.rotation = Quaternion.LookRotation(currentPlayerResetPos.forward, Vector3.zero);
         animHook.setInteractBool(false);
+
         yield return new WaitForSeconds(.5f); //delays the unpausing code to give time for player Pos to be moved
 
         GameEvents.instance.CinematicTriggerExit(); //Calls the cinematic end 
@@ -196,7 +196,7 @@ public class CinematicController : MonoBehaviour
 
     private IEnumerator resetCinematicComponenets() //Resetting values of cinematicController
     {
-        PlayerManager.instance.setCameraLookAt(lookAtTarget);
+        PlayerManager.instance.setCameraLookAt(lookAtTarget, false);
         yield return new WaitForSeconds(2.5f);
         if (currentCinematicCam != null)
         {
@@ -210,9 +210,10 @@ public class CinematicController : MonoBehaviour
         currentCinematicCam = null;
         currentCinematicDirector = null;
         timeIntoAnimation = 0;
-
-        yield return new WaitForSeconds(2000f);
-        PlayerManager.instance.setCameraLookAt(PlayerManager.instance.playerLookatTarget);
+        //CHANGE CINEMACHINE CAMERA OFFSET
+                
+        yield return new WaitForSeconds(2f);
+        PlayerManager.instance.setCameraLookAt(PlayerManager.instance.playerLookatTarget, true);
         yield return new WaitForSeconds(.5f);
         PlayerManager.instance.pausePlayer(false, false);
 

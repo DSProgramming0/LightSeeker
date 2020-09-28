@@ -11,10 +11,21 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private GameObject objectInSight;
     [SerializeField] private GameObject previousObj;
 
+    [Header("Overlay")]
+    //this is your object that you want to have the UI element hovering over
+    [SerializeField] private List<GameObject> allActiveLightPillars;
+    [SerializeField] private GameObject closestLightPillar;
+    //this is the ui element
+    [SerializeField] RectTransform iconOverlay;
+    [SerializeField] Canvas canvas;
+    [SerializeField] private bool overlay;
+
+    [Header("Focusing")]
     private float originalFOV;
     [SerializeField] private float focusedFOV;
     [SerializeField] private float focusSmoothing;
 
+    [Header("Object interaction")]
     [SerializeField] private float InteractDistance;
     [SerializeField] private bool canInteract = false;
     [SerializeField] private LayerMask lookAtLayer;
@@ -22,6 +33,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float wallRevealDistance;
     [SerializeField] private float revealingTimer;
 
+    
     private void Start()
     {
         _playerManager = GetComponent<PlayerManager>();
@@ -174,5 +186,55 @@ public class PlayerInteract : MonoBehaviour
             float fovTargetValue = Mathf.Lerp(vCam.m_Lens.FieldOfView, originalFOV, focusSmoothing * Time.deltaTime);
             vCam.m_Lens.FieldOfView = fovTargetValue;
         }
-    }  
+
+        closestLightPillar = GetClosestLightPillar();
+    }
+
+    GameObject GetClosestLightPillar()
+    {
+        GameObject tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
+        foreach (GameObject t in allActiveLightPillars)
+        {
+            float dist = Vector3.Distance(t.transform.position, currentPos);
+            if (dist < minDist)
+            {
+                tMin = t;
+                minDist = dist;
+            }
+        }
+        return tMin;
+    }
+
+    void LateUpdate()
+    {
+        if(_playerManager.getInteractState() == PlayerInteractState.FOCUSING)
+        {
+            overlayWorldSprite();
+        }
+        else
+        {
+            iconOverlay.gameObject.SetActive(false);
+        }
+    }
+
+    private void overlayWorldSprite() //Make this work
+    {
+        iconOverlay.gameObject.SetActive(true);
+
+        //first you need the RectTransform component of your canvas
+        RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
+
+        //then you calculate the position of the UI element
+        //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this, you need to subtract the height / width of the canvas * 0.5 to get the correct position.
+
+        Vector2 ViewportPosition = cam.WorldToViewportPoint(closestLightPillar.transform.position);
+        Vector2 WorldObject_ScreenPosition = new Vector2(
+        ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+        ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+
+        //now you can set the position of the ui element
+        iconOverlay.anchoredPosition = WorldObject_ScreenPosition;
+    }
 }

@@ -38,9 +38,19 @@ public class PlayerManager : MonoBehaviour
         animHook = GetComponent<AnimatorHook>();
     }   
 
-    public void setCameraLookAt(Transform _target)
+    public void setCameraLookAt(Transform _target, bool _defaultOffset)
     {
         MainvCam.LookAt = _target;
+
+        if (_defaultOffset)
+        {
+            MainvCam.GetComponent<CinemachineCameraOffset>().m_Offset = new Vector3(.5f, 0f, -.76f);
+        }
+        else
+        {
+            Debug.Log("Setting");
+            MainvCam.GetComponent<CinemachineCameraOffset>().m_Offset = new Vector3(0.36f, -0.23f, -2.98f);
+        }
     }
 
     public void setMovementState(PlayerMovementStates _state)
