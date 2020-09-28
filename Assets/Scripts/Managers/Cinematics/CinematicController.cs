@@ -15,6 +15,9 @@ public class CinematicController : MonoBehaviour
     [SerializeField] private CinemachineDollyCart currentDollyCart;
     [SerializeField] private CinemachineVirtualCamera currentCinematicCam;
     [SerializeField] private PlayableDirector currentCinematicDirector;
+    [SerializeField] private LightPillarActivation currentLightPillar;
+    [SerializeField] private Transform currentPlayerResetPos;
+    [SerializeField] private Transform lookAtTarget;
     [SerializeField] private float cinematicMovementSpeed;
     [SerializeField] private float timeIntoAnimation;
     [SerializeField] private  float interactHoldDownTime;
@@ -47,12 +50,12 @@ public class CinematicController : MonoBehaviour
                 timeIntoAnimation += cinematicMovementSpeed * Time.deltaTime; //W input increase float value which is given as a value to the cart postion and the camera time value.
                 currentDollyCart.m_Position = timeIntoAnimation;
                 currentCinematicDirector.time = timeIntoAnimation;
-                animHook.setSpeed(Mathf.Lerp(2, 0, 10 * Time.deltaTime));
+                animHook.setSpeed(2f);
             }
             else
             {
                 currentCinematicDirector.time = timeIntoAnimation;
-                animHook.setSpeed(Mathf.Lerp(0, 2, 10 * Time.deltaTime));
+                animHook.setSpeed(0f);
             }
 
             if(currentCinematicDirector.time >= currentCinematicDirector.duration - 1f) //Starts playing beam of light effect before end of animation
@@ -96,12 +99,15 @@ public class CinematicController : MonoBehaviour
         }
     }
 
-    public void setCurrentCinematicComponents(CinemachineDollyCart _dollyCart, CinemachineVirtualCamera _vCam, PlayableDirector _director) //Sets cinematicControllers components dependent on the current cinematicTrigger entered
-    {
+    public void setCurrentCinematicComponents(CinemachineDollyCart _dollyCart, CinemachineVirtualCamera _vCam, PlayableDirector _director, LightPillarActivation _lightPillar, Transform _playerResetPos, Transform _lookAtPos)
+    { //Sets cinematicControllers components dependent on the current cinematicTrigger entered
         Debug.Log("Called");
         currentDollyCart = _dollyCart;
         currentCinematicCam = _vCam;
         currentCinematicDirector = _director;
+        currentLightPillar = _lightPillar;
+        currentPlayerResetPos = _playerResetPos;
+        lookAtTarget = _lookAtPos;
     }
 
     public void pausePlayerCinematic() //Pauses player controls, sets them as a child of the card and switched camera
@@ -109,17 +115,32 @@ public class CinematicController : MonoBehaviour
         PlayerManager.instance.pausePlayer(true, false);
         PlayerManager.instance.setWorldState(PlayerWorldState.INCINEMATIC);
 
+        UIManager.instance.startFade(.75f, false);
+
+        StartCoroutine(setCinematicPosition());
+    }
+
+    private IEnumerator setCinematicPosition() //Delays palyer movement until blackout screen has unfaded and player pos is set in the cinematic dolly cart
+    {
+        cinematicMovementStopped = true;
+        yield return new WaitForSeconds(.2f);
+        currentCinematicCam.Priority = 15; //Switches camera to cinematic camera
+        currentCinematicDirector.Play();
+
+        Debug.Log("Calling");
+
         player.transform.parent = currentDollyCart.transform; //Moves playerPos to the dollyCaet Position
         player.transform.position = player.transform.parent.position - new Vector3(0, 1, 0);
         player.transform.rotation = Quaternion.Euler(player.transform.parent.rotation.x, player.transform.parent.rotation.y, player.transform.parent.rotation.z);
 
-        currentCinematicCam.Priority = 15; //Switches camera to cinematic camera
-        currentCinematicDirector.Play();
+        yield return new WaitForSeconds(1f);
+        cinematicMovementStopped = false;
+
+        StopCoroutine(setCinematicPosition());
     }
 
     public void unPausePlayerCinematic() //Resetting values of the cinematic Controller and giving the player control
     {
-        PlayerManager.instance.pausePlayer(false, false);
         PlayerManager.instance.setWorldState(PlayerWorldState.FREECONTROL);
 
         player.transform.parent = null;
@@ -149,29 +170,52 @@ public class CinematicController : MonoBehaviour
         }
 
         //PLAY EFFECTS HERE
+        currentLightPillar.activateLightPillar();
         interactKeyPressRequired = false;
 
-        yield return new WaitForSeconds(4f);
-
+        yield return new WaitForSeconds(3f); //Whilst activate animation is playing
+        UIManager.instance.startFade(5f, true);
+        yield return new WaitForSeconds(1f); //Whilst fading move pos
+        player.transform.position = currentPlayerResetPos.position;
+        player.transform.rotation = Quaternion.LookRotation(currentPlayerResetPos.forward, Vector3.zero);
         animHook.setInteractBool(false);
-        GameEvents.instance.CinematicTriggerExit();
-        cinematicMovementStopped = false;
+        yield return new WaitForSeconds(.5f); //delays the unpausing code to give time for player Pos to be moved
+
+        GameEvents.instance.CinematicTriggerExit(); //Calls the cinematic end 
+
+        yield return new WaitForSeconds(3.1f);
+
+        animHook.setBool("StandingUp_fromCrouch", true);
+
+        yield return new WaitForSeconds(3.5f);
+
+        animHook.setBool("StandingUp_fromCrouch", false);
 
         StopCoroutine(playFreeTheLightEffect());
     }
 
     private IEnumerator resetCinematicComponenets() //Resetting values of cinematicController
     {
-        if(currentCinematicCam != null)
+        PlayerManager.instance.setCameraLookAt(lookAtTarget);
+        yield return new WaitForSeconds(2.5f);
+        if (currentCinematicCam != null)
         {
             currentCinematicCam.Priority = 8; //Switches to mainCam
-        }
+        }        
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f); //Delays player movement after whiteOut
+
+        cinematicMovementStopped = false;
         currentDollyCart = null;
         currentCinematicCam = null;
         currentCinematicDirector = null;
         timeIntoAnimation = 0;
+
+        yield return new WaitForSeconds(2000f);
+        PlayerManager.instance.setCameraLookAt(PlayerManager.instance.playerLookatTarget);
+        yield return new WaitForSeconds(.5f);
+        PlayerManager.instance.pausePlayer(false, false);
+
 
         StopCoroutine(resetCinematicComponenets());
 

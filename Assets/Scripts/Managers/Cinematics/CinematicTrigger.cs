@@ -9,6 +9,9 @@ public class CinematicTrigger : MonoBehaviour
     [SerializeField] private CinemachineDollyCart thisDollyCart;
     [SerializeField] private CinemachineVirtualCamera thisVCam;
     [SerializeField] private PlayableDirector thisDirector;
+    [SerializeField] private LightPillarActivation thisLightPillar;
+    [SerializeField] private Transform thisPlayerResetPos;
+    [SerializeField] private Transform thisPlayerLookAtPoint;
 
     [SerializeField] private bool hasPlayed;
 
@@ -27,7 +30,7 @@ public class CinematicTrigger : MonoBehaviour
    
     private IEnumerator startingCinematic() //Sets the cinematicController components by passing this triggers local variables
     {
-        CinematicController.instance.setCurrentCinematicComponents(thisDollyCart, thisVCam, thisDirector);
+        CinematicController.instance.setCurrentCinematicComponents(thisDollyCart, thisVCam, thisDirector, thisLightPillar, thisPlayerResetPos, thisPlayerLookAtPoint);
 
         yield return new WaitForSeconds(.25f);
 

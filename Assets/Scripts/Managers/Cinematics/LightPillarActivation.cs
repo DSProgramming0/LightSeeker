@@ -4,51 +4,55 @@ using UnityEngine;
 
 public class LightPillarActivation : MonoBehaviour
 {
+    private AnimatorHook animHook;
+
     private bool hasPlayed;
     private bool playEffect;
-    [SerializeField]  private MeshRenderer mesh;
-    [SerializeField] private Material thisMat;
-    [SerializeField] private float value1;
-    [SerializeField] private float value2;
-    [SerializeField] private float value3;
+    [SerializeField] private MeshRenderer mesh;
+    [SerializeField] private Material activatedLightPillarMat;
+    [SerializeField] private float alterSpeedValue;
+
+
 
     void Start()
     {
+        animHook = GetComponent<AnimatorHook>();
         mesh = GetComponent<MeshRenderer>();
-        thisMat = mesh.materials[0];
-    }
-
-    void OnTriggerEnter(Collider other) //Calling the cinematic events
+    } 
+    
+    public void activateLightPillar() //Starts to play all effects related to lightPillar activating
     {
-        if (other.gameObject.tag == "Player") 
+        if (!hasPlayed)
         {
-            if (!hasPlayed)
-            {
-                Debug.Log("Play massive pillar effect, adjust exposure of skybox, make it look fancy");
-                hasPlayed = true;
-                playEffect = true;
-            }
-        }
-    }
+            animHook.setBool("hasActivated", true);
+            mesh.material = activatedLightPillarMat;
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player") ;
-        {
-            playEffect = false;
+            hasPlayed = true;
+            playEffect = true;
+
+            StartCoroutine(stopEffect());
         }
     }
 
     void Update()
     {
-        if (playEffect) //Changes intensity of HDR emission to be brighter and blinding
+        if(playEffect)
         {
-            float intensityMultiplier = Mathf.Pow(value1, value2);
-            intensityMultiplier = Mathf.Pow(intensityMultiplier, value3);
-            Color color = thisMat.color;
+            alterEmission();
+        }
+    }
 
-            thisMat.SetColor("_EmissionColor", color *= intensityMultiplier );
-        }       
+    private void alterEmission()
+    {
+        Debug.Log("Calling");
+        float value = Mathf.Lerp(1.1f, 1.9f, Mathf.PingPong(Time.time / alterSpeedValue, 1));
+        mesh.material.SetFloat("_EmissionPower", value);
+    }
+
+    private IEnumerator stopEffect()
+    {
+        yield return new WaitForSeconds(5f);
+        playEffect = false;
     }
 
 }

@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private CinemachineFreeLook MainvCam;
 
     [SerializeField] private GameObject playerBody;
+    public Transform playerLookatTarget;
 
     public PlayerMovementStates playerMovementState;
     public PlayerInteractState playerInteractState;
@@ -36,6 +37,11 @@ public class PlayerManager : MonoBehaviour
         playerInteraction = GetComponent<PlayerInteract>();
         animHook = GetComponent<AnimatorHook>();
     }   
+
+    public void setCameraLookAt(Transform _target)
+    {
+        MainvCam.LookAt = _target;
+    }
 
     public void setMovementState(PlayerMovementStates _state)
     {

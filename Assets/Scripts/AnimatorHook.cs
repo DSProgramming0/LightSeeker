@@ -9,12 +9,8 @@ public class AnimatorHook : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-    }
+    } 
 
-    void Update()
-    {
-        
-    }
 
     public void setSpeed(float _speed)
     {
@@ -41,5 +37,10 @@ public class AnimatorHook : MonoBehaviour
     public void setInteractBool(bool _isInteracting)
     {
         anim.SetBool("Interacting", _isInteracting);
+    }
+
+    public void setBool(string _boolName, bool _result)
+    {
+        anim.SetBool(_boolName, _result);
     }
 }

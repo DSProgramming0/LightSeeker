@@ -13,7 +13,7 @@ public class GameEvents : MonoBehaviour
         instance = this;
     }
 
-    public event Action onCinematicTriggerEnter;
+    public event Action onCinematicTriggerEnter; //Called on the cinematic trigger class 
     public void CinematicTriggerEnter()
     {
         if(onCinematicTriggerEnter != null)

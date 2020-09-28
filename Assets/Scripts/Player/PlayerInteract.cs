@@ -82,7 +82,7 @@ public class PlayerInteract : MonoBehaviour
 
                     return cameraHitPoint;
                 }
-                else if (cameraHit.transform.GetComponent<HiddenMessage>() && _playerManager.getInteractState() == PlayerInteractState.FOCUSING)
+                else if (cameraHit.transform.GetComponent<HiddenMessage>() && _playerManager.getInteractState() == PlayerInteractState.FOCUSING) //If cameraHit a wall with a secret message and is focusing
                 {
                     float dist = Vector3.Distance(transform.position, cameraHit.transform.position);
                     HiddenMessage secretMessageWall = cameraHit.transform.GetComponent<HiddenMessage>();
@@ -98,11 +98,11 @@ public class PlayerInteract : MonoBehaviour
 
                     if (canInteract)
                     {
-                        if(secretMessageWall.messageRevealed == false)
+                        if(secretMessageWall.messageRevealed == false) //If the message has not already been revealed
                         {
                             revealingTimer += Time.deltaTime;
 
-                            if (revealingTimer > 3f)
+                            if (revealingTimer > 3f) //If player has looked at the message long enough, it will reveal
                             {
                                 secretMessageWall.revealMessage();
                             }
@@ -110,7 +110,7 @@ public class PlayerInteract : MonoBehaviour
                         else
                         {
                             Debug.Log("You have already discovered the message on " + secretMessageWall._name);
-                            revealingTimer = 0;
+                            revealingTimer = 0; //resets if the player looks away
                         }                        
                     }
                 }
