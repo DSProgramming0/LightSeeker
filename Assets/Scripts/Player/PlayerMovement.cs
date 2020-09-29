@@ -90,13 +90,13 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (distToGroundCheck < 0.79f) //Adjusts players leg IK if the distance to groundCheck gets below a certain value.
                     {
-                        //Debug.Log("adjusting...");
+                        Debug.Log("adjusting...");
 
                         transform.position = new Vector3(transform.position.x, transform.position.y + distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
                     }
                     else if (distToGroundCheck > 0.85f)
                     {
-                        //Debug.Log("lowering");
+                        Debug.Log("lowering");
 
                         transform.position = new Vector3(transform.position.x, transform.position.y - distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
                     }

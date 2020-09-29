@@ -30,6 +30,9 @@ public class LightPillarActivation : MonoBehaviour
             hasPlayed = true;
             playEffect = true;
 
+            Target thisIcon = GetComponentInChildren<Target>();
+            thisIcon.removeSelf();
+
             StartCoroutine(stopEffect());
         }
     }
