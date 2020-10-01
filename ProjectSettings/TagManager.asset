@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Walkable
+  - Companion
+  - Cinematic
   layers:
   - Default
   - TransparentFX

@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private CinemachineFreeLook MainvCam;
 
     [SerializeField] private GameObject playerBody;
+    [SerializeField] private GameObject playerCompanion;
     public Transform playerLookatTarget;
 
     public PlayerMovementStates playerMovementState;
@@ -98,6 +99,7 @@ public class PlayerManager : MonoBehaviour
             if (_shouldHide)
             {
                 playerBody.SetActive(false);
+                playerCompanion.SetActive(false);
             }
         }
         else
@@ -106,7 +108,9 @@ public class PlayerManager : MonoBehaviour
             playerWorldState = PlayerWorldState.FREECONTROL;
             MainvCam.m_XAxis.m_InputAxisName = "Mouse X";
             MainvCam.m_YAxis.m_InputAxisName = "Mouse Y";
+
             playerBody.SetActive(true);
+            playerCompanion.SetActive(true);
         }
     }
 }

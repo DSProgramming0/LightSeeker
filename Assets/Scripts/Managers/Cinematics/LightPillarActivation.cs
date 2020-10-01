@@ -11,9 +11,7 @@ public class LightPillarActivation : MonoBehaviour
     [SerializeField] private MeshRenderer mesh;
     [SerializeField] private Material activatedLightPillarMat;
     [SerializeField] private float alterSpeedValue;
-
-
-
+    
     void Start()
     {
         animHook = GetComponent<AnimatorHook>();
@@ -33,6 +31,7 @@ public class LightPillarActivation : MonoBehaviour
             Target thisIcon = GetComponentInChildren<Target>();
             thisIcon.removeSelf();
 
+            GameEvents.instance.LightPillarActivated(); //Call light pillar activated event
             StartCoroutine(stopEffect());
         }
     }

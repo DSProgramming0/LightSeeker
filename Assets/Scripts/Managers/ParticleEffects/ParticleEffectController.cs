@@ -16,7 +16,7 @@ public class ParticleEffectController : MonoBehaviour
         originalStartSize = currentParticleEffect.main.startSize;
         originalEmmissionRate = currentParticleEffect.emission.rateOverTime;
 
-        GameEvents.instance.onCinematicTriggerEnter += particleIncreaseCinematic;
+        GameEvents.instance.onCinematicTriggerEnter += particleIncreaseCinematic; //Increases particles when cinematic starts
         GameEvents.instance.onCinematicTriggerExit += resetParticleSystemValues;
     }   
 

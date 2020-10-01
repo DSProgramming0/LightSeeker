@@ -6,10 +6,12 @@ using Cinemachine;
 public class PlayerInteract : MonoBehaviour
 {
     private PlayerManager _playerManager;
+    private CompanionData companionData;
     [SerializeField] private Camera cam;
     [SerializeField] private CinemachineFreeLook vCam;
     [SerializeField] private GameObject objectInSight;
     [SerializeField] private GameObject previousObj;
+    [SerializeField] private LayerMask playerLayer;
 
     [Header("Overlay")]
     //this is your object that you want to have the UI element hovering over
@@ -30,10 +32,14 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float wallRevealDistance;
     [SerializeField] private float revealingTimer;
 
-    
+    [Header("Companion")]
+    private bool targetSwitched = false;
+
+
     private void Start()
     {
         _playerManager = GetComponent<PlayerManager>();
+        companionData = FindObjectOfType<CompanionData>();
         offScreenIndicator = FindObjectOfType<OffScreenIndicator>();
         originalFOV = vCam.m_Lens.FieldOfView;
     }
@@ -124,6 +130,28 @@ public class PlayerInteract : MonoBehaviour
                         }                        
                     }
                 }
+                else if(cameraHit.transform.tag == "Companion")
+                {
+                    Vector3 lookAtPoint = cameraAim.GetPoint(20f);
+
+                    Debug.Log("Intersecting with companion");
+
+                    if (targetSwitched == false)
+                    {
+                        companionData.switchTarget();
+                        targetSwitched = true;
+                        StartCoroutine(resetTargetSwitched());
+                    }
+
+                    return lookAtPoint;
+                }
+                else if (cameraHit.transform.tag == "Player" || cameraHit.transform.tag == "Cinematic")
+                {
+                    Debug.Log("Intersecting with player");
+
+                    Vector3 lookAtPoint = cameraAim.GetPoint(20f);
+                    return lookAtPoint;
+                }
                 else //If we are still looking at something but it is not an interactable Object
                 {
                     //Debug.Log("Hitting " + cameraHit.transform.name);
@@ -195,6 +223,13 @@ public class PlayerInteract : MonoBehaviour
     public void removeFromList(Target _target)
     {
         allActiveLightPillars.Remove(_target.gameObject);
+    }
+
+    private IEnumerator resetTargetSwitched()
+    {
+        yield return new WaitForSeconds(5f);
+        targetSwitched = false;
+        StopCoroutine(resetTargetSwitched());
     }
 
     GameObject GetClosestLightPillar()

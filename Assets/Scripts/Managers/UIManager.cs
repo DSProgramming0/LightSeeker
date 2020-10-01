@@ -47,15 +47,15 @@ public class UIManager : MonoBehaviour
         }
     }   
 
-    public void startFade(float _blackoutTime, bool _whiteOut)
+    public void startFade(float _time, bool _whiteOut)
     {
         if (!_whiteOut)
         {
-            StartCoroutine(toggleBlackout(_blackoutTime));
+            StartCoroutine(toggleBlackout(_time));
         }
         else
         {
-            StartCoroutine(toggleWhiteOut(_blackoutTime));
+            StartCoroutine(toggleWhiteOut(_time));
         }
     }
 
@@ -84,7 +84,6 @@ public class UIManager : MonoBehaviour
 
     private void UnFadeBlack()
     {
-        Debug.Log("Calling black fade");
         blackoutScreen.alpha -= fadeTime * Time.deltaTime;
     }
 
@@ -95,8 +94,6 @@ public class UIManager : MonoBehaviour
 
     private void UnFadeWhite()
     {
-        Debug.Log("Calling white fade");
-
         whiteOutScreen.alpha -= fadeTime * Time.deltaTime;
     }
 
