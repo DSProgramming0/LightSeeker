@@ -91,7 +91,11 @@ public class CinematicController : MonoBehaviour
 
                 if (currentCinematicDirector.time >= currentCinematicDirector.duration - 1f) //Starts playing beam of light effect before end of animation
                 {
-                    StartCoroutine(playFreeTheLightEffect());
+                    if(interactKeyPressRequired == false)
+                    {
+                        interactKeyPressRequired = true;
+                        cinematicMovementStopped = true;
+                    }
                 }
 
                 if (Input.GetKey(KeyCode.E))
@@ -105,6 +109,7 @@ public class CinematicController : MonoBehaviour
                         {
                             //PLAYER CAN LET GO OF INTERACT KEY HERE
                             interactKeyPressRequired = false; //Interact Animation still plays 
+                            StartCoroutine(playFreeTheLightEffect());
                             lightBeamActivated = true;
                         }
                     }
@@ -112,7 +117,6 @@ public class CinematicController : MonoBehaviour
                 else if (lightBeamActivated)
                 {
                     interactHoldDownTime = 0;
-                    animHook.setInteractBool(true);
                 }
                 else
                 {
@@ -198,11 +202,6 @@ public class CinematicController : MonoBehaviour
     private IEnumerator playFreeTheLightEffect() //Gives times to play effect / waitForSeconds should be changed depending on lenght of effect
     {
         animHook.setSpeed(0F); //Lerp?
-        cinematicMovementStopped = true;
-        if(interactKeyPressSet == false)
-        {
-            setInteractState();
-        }
 
         while (interactKeyPressRequired) //Waiting for player input to activate effects
         {
@@ -245,6 +244,8 @@ public class CinematicController : MonoBehaviour
     private IEnumerator resetPlayerDrivenCinematicComponenets() //Resetting values of cinematicController
     {
         PlayerManager.instance.setCameraLookAt(lookAtTarget, false);
+        interactHoldDownTime = 0f;
+        interactKeyPressRequired = false;
         yield return new WaitForSeconds(2.5f);
 
         if (currentCinematicCam != null)
@@ -256,7 +257,8 @@ public class CinematicController : MonoBehaviour
 
         yield return new WaitForSeconds(5f); //Delays player movement after whiteOut          
 
-        cinematicMovementStopped = false;
+        cinematicMovementStopped = false;        
+        yield return new WaitForSeconds(1f);
 
         currentCinematicType = CinematicType.PLAYERDRIVEN;
         currentDollyCart = null;

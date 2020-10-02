@@ -22,7 +22,7 @@ public class ParticleEffectController : MonoBehaviour
 
     public void particleIncreaseCinematic()
     {
-        setParticleSystemValues(1f, 2f, .1f, .5f, 10000f);
+        setParticleSystemValues(1f, 1.7f, .1f, .4f, 10000f);
     }
 
     public void setParticleSystemValues(float _minSpeed, float _maxSpeed, float _minSize, float _maxSize, float _rateOverTime) //Sets particle system values to aggressive state

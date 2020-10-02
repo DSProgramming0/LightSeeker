@@ -62,7 +62,7 @@ public class PlayerInteract : MonoBehaviour
 
         if (_playerManager.getWorldState() == PlayerWorldState.FREECONTROL)
         {
-            if (Physics.Raycast(cameraAim, out cameraHit))
+            if (Physics.Raycast(cameraAim, out cameraHit , lookAtLayer))
             {
                 Vector3 cameraHitPoint = cameraHit.point;
 

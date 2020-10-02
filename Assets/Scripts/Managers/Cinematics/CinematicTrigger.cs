@@ -27,7 +27,6 @@ public class CinematicTrigger : MonoBehaviour
             if (!hasPlayed)
             {
                 StartCoroutine(startingCinematic());
-                hasPlayed = true;
             }
         }       
     }
@@ -46,6 +45,9 @@ public class CinematicTrigger : MonoBehaviour
         yield return new WaitForSeconds(.25f);
 
         GameEvents.instance.CinematicTriggerEnter(); //Calls the event 
+
+        hasPlayed = true;
+
 
         StopCoroutine(startingCinematic());
     }

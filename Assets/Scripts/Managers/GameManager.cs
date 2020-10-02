@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int lightBeamsActivated;
+    [SerializeField] private float distance = 1000;
        
     // Start is called before the first frame update
     void Start()
@@ -15,9 +16,18 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void Update()
+    {
+        increaseTerrainDetail();
+    }
+
     private void addActiveLightBeam() //Increases current light beams activated.
     {
         lightBeamsActivated++;
     }
 
+    private void increaseTerrainDetail()
+    {
+        Terrain.activeTerrain.detailObjectDistance = distance;
+    }
 }
