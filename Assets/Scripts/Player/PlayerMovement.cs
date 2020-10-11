@@ -18,12 +18,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Standard Movement")]
     [SerializeField] private float speed;
     private float walkSpeed = 2f;
-    private float runSpeed = 8f;
+    private float runSpeed = 7f;
     private float idleSpeed = 0.01f;
     [SerializeField] private float speedGain;
-    [SerializeField] private float walkToIdleGain = 8f;
-    [SerializeField] private float idleToWalkGain = 8f;
-    [SerializeField] private float walkToRunGain = 8f;
+    [SerializeField] private float walkToIdleGain;
+    [SerializeField] private float idleToWalkGain;
+    [SerializeField] private float walkToRunGain;
     [SerializeField] private float turnSmoothTime;
     private float standardTurnSmooth = 0.4f;
     private float sprintTurnSmooth = 0.05f;
@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.45f;
 
     [Header("Checks")]
+    [SerializeField] private float slopeForce;
     [SerializeField] private float slopeForceRayLength;
     [SerializeField] private float adjustmentSmoothTime;
     [SerializeField] private float moveGroundCheckDist;
@@ -60,10 +61,11 @@ public class PlayerMovement : MonoBehaviour
         if(_playerManager.getWorldState() != PlayerWorldState.INCINEMATIC)
         {
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Checking GroundCheck by casting a sphere, if it hits the correct layer, player is grounded
-            if (isGrounded)
-            {
-                MoveGroundCheck(); //Constantly moves the groundCheck along the surface below the player, if they're grounded
-            }
+
+            //if (isGrounded)
+            //{
+            //    MoveGroundCheck(); //Constantly moves the groundCheck along the surface below the player, if they're grounded
+            //}
 
             Debug.DrawLine(new Vector3(transform.position.x, transform.position.y + .93f, transform.position.z), groundCheck.position, Color.red);
             distToGroundCheck = transform.position.y + .93f - groundCheck.position.y; //Checking the distance between the midway of the controller to the groundcheck
@@ -86,21 +88,21 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * speed * Time.deltaTime); //Moves the palyer in the direction specified by its rotation.
 
-                if (!isJumping)
-                {
-                    if (distToGroundCheck < 0.79f) //Adjusts players leg IK if the distance to groundCheck gets below a certain value.
-                    {
-                        Debug.Log("adjusting...");
+                //if (!isJumping)
+                //{
+                //    if (distToGroundCheck < 0.79f) //Adjusts players leg IK if the distance to groundCheck gets below a certain value.
+                //    {
+                //        Debug.Log("adjusting...");
 
-                        transform.position = new Vector3(transform.position.x, transform.position.y + distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
-                    }
-                    else if (distToGroundCheck > 0.85f)
-                    {
-                        Debug.Log("lowering");
+                //        transform.position = new Vector3(transform.position.x, transform.position.y + distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
+                //    }
+                //    else if (distToGroundCheck > 0.85f)
+                //    {
+                //        Debug.Log("lowering");
 
-                        transform.position = new Vector3(transform.position.x, transform.position.y - distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
-                    }
-                }
+                //        transform.position = new Vector3(transform.position.x, transform.position.y - distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
+                //    }
+                //}
             }
 
             if (isJumping) //Applies force on the yAxis to simulate a jump
@@ -118,22 +120,13 @@ public class PlayerMovement : MonoBehaviour
 
                     animHook.setGround(true);
                     isJumping = false;
-                }
+                }               
             }
+            
+            velocity.y += gravity * Time.fixedDeltaTime;
 
-            if (!isGrounded) //If player is not grounded, the leg IK is disabled and gravity is applied to the controller to pull it back down
-            {
-                animHook.toggleIK(0f);
-                velocity.y += gravity * Time.deltaTime;
-
-                controller.Move(velocity * Time.deltaTime);
-
-                if (isJumping)
-                {
-                    Debug.Log("Player is falling, not jumping");
-                }
-            }
-        }       
+            controller.Move(velocity * Time.fixedDeltaTime);
+        }
     }
 
     // Update is called once per frame
@@ -200,37 +193,43 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void MoveGroundCheck() //Moves groundCheck Obj to skim across the surface below the player
-    {
-        RaycastHit hit;
-        Debug.DrawLine(groundCheck.position, groundCheck.position + (Vector3.down * moveGroundCheckDist), Color.red);
+    //private void MoveGroundCheck() //Moves groundCheck Obj to skim across the surface below the player
+    //{
+    //    RaycastHit hit;
+    //    Debug.DrawLine(groundCheck.position, groundCheck.position + (Vector3.down * moveGroundCheckDist), Color.red);
 
-        if (Physics.Raycast(groundCheck.position, Vector3.down, out hit, moveGroundCheckDist, groundMask))
-        {
-            groundCheck.position = new Vector3(groundCheck.position.x, hit.point.y + 0.1f, groundCheck.position.z);
-        }
+    //    if (Physics.Raycast(groundCheck.position, Vector3.down, out hit, moveGroundCheckDist, groundMask))
+    //    {
+    //        groundCheck.position = new Vector3(groundCheck.position.x, hit.point.y + 0.1f, groundCheck.position.z);
+    //    }
 
-        if(Physics.Raycast(groundCheck.position, Vector3.up, out hit, 6f, groundMask))
-        {
-            Debug.Log("BelowGround");
-        }
-    }
+    //    if(Physics.Raycast(groundCheck.position, Vector3.up, out hit, 6f, groundMask))
+    //    {
+    //        Debug.Log("BelowGround");
+    //    }
+    //}
 
-    private bool OnSlope() //Checks if the player is on a slope
-    {
-        RaycastHit hit;
-        Debug.DrawLine(groundCheck.position, groundCheck.position + (Vector3.down * slopeForceRayLength), Color.red);
+    //private bool OnSlope() //Checks if the player is on a slope
+    //{
 
-        if (Physics.Raycast(groundCheck.position, Vector3.down, out hit, slopeForceRayLength))
-        {
-            if (hit.transform.rotation.z != 0)
-            {
-                return true;
-            }
-        }
+    //    if (isJumping)
+    //    {
+    //        return false;
+    //    }
 
-        return false;
-    }
+    //    RaycastHit hit;
+    //    Debug.DrawLine(transform.position, transform.position + (Vector3.down * slopeForceRayLength), Color.red);
+
+    //    if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * slopeForceRayLength))
+    //    {
+    //        if(hit.normal != Vector3.up)
+    //        {
+    //            return true;
+    //        }
+    //    }
+
+    //    return false;
+    //}
 
     public void stopMovement(bool _stopPlayer) //Controls player movement
     {

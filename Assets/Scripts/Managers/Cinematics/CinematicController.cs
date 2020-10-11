@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.Playables;
+using TMPro;
 
 public class CinematicController : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class CinematicController : MonoBehaviour
     [SerializeField] private LightPillarActivation currentLightPillar;
     [SerializeField] private Transform currentPlayerResetPos;
     [SerializeField] private Transform lookAtTarget;
+
+    [SerializeField] private TextMeshProUGUI walkPrompt;
+    [SerializeField] private TextMeshProUGUI interactPrompt;
+
     [SerializeField] private float cinematicMovementSpeed;
     [SerializeField] private float timeIntoAnimation;
     [SerializeField] private  float interactHoldDownTime;
@@ -76,6 +81,11 @@ public class CinematicController : MonoBehaviour
             playerMainCam.Priority = 7;
             if(currentCinematicType == CinematicType.PLAYERDRIVEN)
             {
+                if (!cinematicMovementStopped)
+                {
+                    UIManager.instance.togglePrompt(walkPrompt, true);
+                }
+
                 if (Input.GetKey(KeyCode.W) && !cinematicMovementStopped) //Moves Dolly cart and camera depending on w input if cinematicMovement is enabled
                 {
                     timeIntoAnimation += cinematicMovementSpeed * Time.deltaTime; //W input increase float value which is given as a value to the cart postion and the camera time value.
@@ -95,6 +105,13 @@ public class CinematicController : MonoBehaviour
                     {
                         interactKeyPressRequired = true;
                         cinematicMovementStopped = true;
+
+                        if (!lightBeamActivated)
+                        {
+                            UIManager.instance.togglePrompt(interactPrompt, true);
+                        }
+
+                        UIManager.instance.togglePrompt(walkPrompt, false);
                     }
                 }
 
@@ -137,6 +154,8 @@ public class CinematicController : MonoBehaviour
 
     public void pausePlayerCinematic() //Pauses player controls, sets them as a child of the card and switched camera //THIS STARTS CINEMATIC SEQUENCE
     {
+        UIManager.instance.hideCrosshair(true);
+
         if (currentCinematicType == CinematicType.STANDARD)
         {
             PlayerManager.instance.pausePlayer(true, true);
@@ -177,6 +196,9 @@ public class CinematicController : MonoBehaviour
         {
             StartCoroutine(resetStandardCinematicComponents());
         }
+
+        UIManager.instance.hideCrosshair(false);
+
     }
 
     #region PLAYER DRIVEN CINEMATICS
@@ -210,6 +232,7 @@ public class CinematicController : MonoBehaviour
         }
 
         //PLAY EFFECTS HERE
+        UIManager.instance.togglePrompt(interactPrompt, false);
         currentLightPillar.activateLightPillar();
         if(musicChangeCalled == false) //Makes sure to only call changeSong once
         {
@@ -219,6 +242,7 @@ public class CinematicController : MonoBehaviour
         interactKeyPressRequired = false;
 
         yield return new WaitForSeconds(3f); //Whilst activate animation is playing
+
         UIManager.instance.startFade(5f, true);
 
         yield return new WaitForSeconds(1f); //Whilst fading move pos
@@ -247,6 +271,7 @@ public class CinematicController : MonoBehaviour
         interactHoldDownTime = 0f;
         interactKeyPressRequired = false;
         yield return new WaitForSeconds(2.5f);
+
 
         if (currentCinematicCam != null)
         {

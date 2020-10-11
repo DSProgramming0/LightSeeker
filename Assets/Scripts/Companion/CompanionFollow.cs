@@ -5,11 +5,12 @@ using UnityEngine;
 public class CompanionFollow : MonoBehaviour
 {
     private CompanionData data;
-    [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private Camera mainCam;
 
     const int MAX_FPS = 60;
 
     private Transform target;
+    [SerializeField] private float smoothTime;
 
     Vector3[] _positionBuffer;
     float[] _timeBuffer;
@@ -68,7 +69,7 @@ public class CompanionFollow : MonoBehaviour
         if(PlayerManager.instance.getWorldState() == PlayerWorldState.FREECONTROL)
         {
             transform.position = Vector3.Lerp(_positionBuffer[_oldestIndex], _positionBuffer[nextIndex], progress);
-            transform.LookAt(playerInteract.returnMousePos());
+            transform.rotation = Quaternion.Slerp(transform.rotation, mainCam.transform.rotation, smoothTime * Time.deltaTime);
         }
     }
 

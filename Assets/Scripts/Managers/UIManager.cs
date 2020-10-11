@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
+
+    [SerializeField] private Image crosshair;
     [SerializeField] private CanvasGroup blackoutScreen;
     [SerializeField] private CanvasGroup whiteOutScreen;
 
@@ -45,7 +48,9 @@ public class UIManager : MonoBehaviour
                 UnFadeWhite();
             }
         }
-    }   
+    }
+
+    #region transitions
 
     public void startFade(float _time, bool _whiteOut)
     {
@@ -95,6 +100,28 @@ public class UIManager : MonoBehaviour
     private void UnFadeWhite()
     {
         whiteOutScreen.alpha -= fadeTime * Time.deltaTime;
+    }
+
+    #endregion
+
+    public void togglePrompt(TextMeshProUGUI _promptToShow, bool _shouldShow)
+    {
+        if (_shouldShow)
+        {
+            _promptToShow.alpha = 1;
+        }
+        else
+        {
+            _promptToShow.alpha = 0;
+        }
+    }
+    
+    public void hideCrosshair(bool _shouldHide)
+    {
+        if (_shouldHide)
+            crosshair.enabled = false;
+        else
+            crosshair.enabled = true;        
     }
 
 }
