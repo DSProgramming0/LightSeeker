@@ -6,6 +6,7 @@ public class CompanionFollow : MonoBehaviour
 {
     private CompanionData data;
     [SerializeField] private Camera mainCam;
+    [SerializeField] private PlayerInteract playerLook;
 
     const int MAX_FPS = 60;
 

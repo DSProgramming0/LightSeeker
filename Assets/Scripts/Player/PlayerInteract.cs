@@ -64,7 +64,7 @@ public class PlayerInteract : MonoBehaviour
         {
             if (Physics.Raycast(cameraAim, out cameraHit , lookAtLayer))
             {
-                Vector3 cameraHitPoint = cameraHit.point;
+                Vector3 cameraHitPoint = cameraAim.GetPoint(20f);
 
                 if (cameraHit.transform.GetComponent<InteractableObj>()) //An interactable objects has been targets and can now be interacted with
                 {

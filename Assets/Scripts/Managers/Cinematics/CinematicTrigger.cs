@@ -15,6 +15,7 @@ public class CinematicTrigger : MonoBehaviour
     [SerializeField] private Transform thisPlayerResetPos;
     [SerializeField] private Transform thisPlayerLookAtPoint;
     [SerializeField] private bool hasPlayed;
+    [SerializeField] private float thisStopTime;
 
     [Header("Intro cutscene")]
     [SerializeField] private GameObject cinematicPlayerModel;
@@ -35,7 +36,7 @@ public class CinematicTrigger : MonoBehaviour
     {
         if(thisCinematicType == CinematicType.PLAYERDRIVEN)
         {
-            CinematicController.instance.setCurrentPlayerDrivenCinematicComponents(thisCinematicType, thisDollyCart, thisVCam, thisDirector, thisLightPillar, thisPlayerResetPos, thisPlayerLookAtPoint);
+            CinematicController.instance.setCurrentPlayerDrivenCinematicComponents(thisCinematicType, thisDollyCart, thisVCam, thisDirector, thisLightPillar, thisPlayerResetPos, thisPlayerLookAtPoint, thisStopTime);
         }
         else if (thisCinematicType == CinematicType.STANDARD)
         {
