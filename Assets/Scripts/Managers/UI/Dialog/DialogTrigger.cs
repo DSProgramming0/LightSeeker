@@ -23,13 +23,14 @@ public class DialogTrigger : MonoBehaviour
     private IEnumerator startingDialog()
     {
         hasPlayed = true;
-        dialog.clearSentences();
+        dialog.resetIndex();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.2f);
 
         dialog.setSentences(thisDialogSentences);
+        dialog.setTypingSound(Random.Range(0, dialog.typingSounds.Count - 1));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
 
         dialog.startDialog();
     }
