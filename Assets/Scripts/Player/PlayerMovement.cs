@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
 
     [Header("Jumping")]
+    [SerializeField] private bool canJump = true;
     [SerializeField] private bool isJumping;
     [SerializeField] private float jumpHeight;
     public bool isGrounded;
@@ -88,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * speed * Time.deltaTime); //Moves the palyer in the direction specified by its rotation.
 
+                #region legIk
                 //if (!isJumping)
                 //{
                 //    if (distToGroundCheck < 0.79f) //Adjusts players leg IK if the distance to groundCheck gets below a certain value.
@@ -103,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
                 //        transform.position = new Vector3(transform.position.x, transform.position.y - distToGroundCheck * Time.fixedDeltaTime, transform.position.z);
                 //    }
                 //}
+                #endregion
             }
 
             if (isJumping) //Applies force on the yAxis to simulate a jump
@@ -112,14 +115,10 @@ public class PlayerMovement : MonoBehaviour
                 controller.Move(velocity * Time.fixedDeltaTime);
 
                 if (isGrounded) //reset values if grounded
-                {
-                    if (stopPlayerMovement)
-                    {
-                        StartCoroutine(delayMovementAfterJump()); //Delays movement after a idle Jump
-                    }
-
+                {                 
                     animHook.setGround(true);
                     isJumping = false;
+                    StartCoroutine(delayMovementAfterJump());
                 }               
             }
             
@@ -172,27 +171,35 @@ public class PlayerMovement : MonoBehaviour
                 _playerManager.setMovementState(PlayerMovementStates.IDLE);
             }
 
-            if (Input.GetButtonDown("Jump") && isGrounded && !isJumping) //Controls jumping, can only jump if not jumping
+            if (Input.GetButtonDown("Jump") && isGrounded && !isJumping && canJump && dir != Vector3.zero) //Controls jumping, can only jump if not jumping
             {
                 isJumping = true;
+                canJump = false;
                 animHook.setGround(false);
 
                 if (dir.magnitude >= 0.1f) //Plays running Jump
                 {
                     animHook.setJump(1, 1);
-                }
-                else if (dir.magnitude == 0) //Plays idle JUmp
-                {
-                    stopMovement(true);
-
-                    animHook.setJump(0, 1);
-                }
+                }            
             }
 
             animHook.setSpeed(speed);
         }
+    }   
+
+    public void stopMovement(bool _stopPlayer) //Controls player movement
+    {
+        stopPlayerMovement = _stopPlayer;
     }
 
+    private IEnumerator delayMovementAfterJump() //delays movement after an idle jump
+    {
+        yield return new WaitForSeconds(1.5f);
+        canJump = true;
+        StopCoroutine(delayMovementAfterJump());
+    }
+
+    #region other
     //private void MoveGroundCheck() //Moves groundCheck Obj to skim across the surface below the player
     //{
     //    RaycastHit hit;
@@ -231,15 +238,5 @@ public class PlayerMovement : MonoBehaviour
     //    return false;
     //}
 
-    public void stopMovement(bool _stopPlayer) //Controls player movement
-    {
-        stopPlayerMovement = _stopPlayer;
-    }
-
-    private IEnumerator delayMovementAfterJump() //delays movement after an idle jump
-    {
-        yield return new WaitForSeconds(1f);
-        stopMovement(false);
-        StopCoroutine(delayMovementAfterJump());
-    }
+    #endregion
 }

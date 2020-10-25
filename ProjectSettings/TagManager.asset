@@ -7,6 +7,7 @@ TagManager:
   - Walkable
   - Companion
   - Cinematic
+  - Water
   layers:
   - Default
   - TransparentFX

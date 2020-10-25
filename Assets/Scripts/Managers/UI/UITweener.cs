@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UITweener : MonoBehaviour
 {
-
+    public CanvasGroup thisCanvasGroup;
     public LeanTweenType inType;
     public LeanTweenType outType;
     public float duration;
@@ -12,17 +12,22 @@ public class UITweener : MonoBehaviour
     
     public void showUI()
     {
-        LeanTween.scale(gameObject, new Vector3(1, 1, 1), duration).setDelay(delay).setOnComplete(OnComplete).setEase(inType);
+        LeanTween.scale(gameObject, new Vector3(1, 1, 1), duration).setDelay(delay).setEase(inType);
     }
 
     public void hideUI()
     {
-        LeanTween.scale(gameObject, new Vector3(0, 0, 0), duration).setDelay(delay).setOnComplete(OnComplete).setEase(outType);
+        LeanTween.scale(gameObject, new Vector3(0, 0, 0), duration).setDelay(delay).setEase(outType);
     }
 
-
-    private void OnComplete()
+    public void fadeInBackground()
     {
-
+        LeanTween.alphaCanvas(thisCanvasGroup, 1, 10 * Time.fixedDeltaTime);
     }
+
+    public void fadeOutBackground()
+    {
+        LeanTween.alphaCanvas(thisCanvasGroup, 0, 10 * Time.fixedDeltaTime);
+    }
+
 }

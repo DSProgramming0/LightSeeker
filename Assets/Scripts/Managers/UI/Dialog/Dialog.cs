@@ -98,7 +98,7 @@ public class Dialog : MonoBehaviour
         if (_toggleOn)
         {
             tweener.showUI();
-            ToggleMouse(true);
+            UIManager.instance.ToggleMouse(true);
             dialogDisplaying = true;
             UIManager.instance.hideCrosshair(true);
             PlayerManager.instance.pausePlayer(true, false);
@@ -108,11 +108,10 @@ public class Dialog : MonoBehaviour
             tweener.hideUI();
             UIManager.instance.hideCrosshair(false);
             dialogDisplaying = false;
-            ToggleMouse(false);
+            UIManager.instance.ToggleMouse(false);
             PlayerManager.instance.pausePlayer(false, false);
             DialogSet = false;
         }
-
     }
 
     public void resetIndex()
@@ -129,18 +128,5 @@ public class Dialog : MonoBehaviour
     {
         selectedTypingSound = typingSounds[soundClipIndex];
     }
-
-    private void ToggleMouse(bool _turnOn)
-    {
-        if(_turnOn)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }     
+    
 }

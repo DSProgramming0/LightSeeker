@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23875028280480680}
   m_Layer: 8
   m_Name: River_Plane_Dip_01
-  m_TagString: Walkable
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

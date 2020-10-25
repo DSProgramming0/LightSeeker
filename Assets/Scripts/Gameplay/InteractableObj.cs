@@ -8,9 +8,12 @@ public class InteractableObj : MonoBehaviour
 {
     public string name;
     [SerializeField] private TextMeshProUGUI prompt;
+    [SerializeField] private DisplayMessage messageShow;
+    [SerializeField] private Sprite imageToshow;
 
     [SerializeField] private bool shouldHighlight;
     private bool startCheck = false;
+    [SerializeField] private bool canInteract = true;
 
     private MeshRenderer mesh;
     [SerializeField] private Material highlightedMaterial;
@@ -52,7 +55,23 @@ public class InteractableObj : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("The player did something to me 0 " + name);
+        if (canInteract)
+        {
+            Debug.Log("The player did something to me 0 " + name);
+            canInteract = false;
+            messageShow.setImage(imageToshow, this);
+        }  
+    }
+
+    public void callResetInteract()
+    {
+        StartCoroutine(resetInteractState());
+    }
+
+    private IEnumerator resetInteractState()
+    {
+        yield return new WaitForSeconds(1f);
+        canInteract = true;
     }
 
 }
