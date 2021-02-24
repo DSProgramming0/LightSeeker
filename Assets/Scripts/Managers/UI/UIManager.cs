@@ -152,13 +152,14 @@ public class UIManager : MonoBehaviour
                 togglePlayerState(true);
                 pauseMenu.SetActive(true);
                 pauseMenuActive = true;
+                GameEvents.instance.GamePause();
             }
             else if (pauseMenuActive == true)
             {
                 togglePlayerState(false);
                 pauseMenu.SetActive(false);
                 pauseMenuActive = false;
-
+                GameEvents.instance.GameResume();
             }
         }
     }

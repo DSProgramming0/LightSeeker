@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GameEvents.instance.onLightPillarActivated += addActiveLightBeam;
+        GameEvents.instance.onGamePause += pauseTime;
+        GameEvents.instance.onGameResume += resumeTime;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -29,5 +31,15 @@ public class GameManager : MonoBehaviour
     private void increaseTerrainDetail()
     {
         Terrain.activeTerrain.detailObjectDistance = distance;
+    }
+
+    private void pauseTime()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void resumeTime()
+    {
+        Time.timeScale = 1;
     }
 }

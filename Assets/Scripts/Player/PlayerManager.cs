@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
 
     [SerializeField] private CinemachineFreeLook MainvCam;
+    [SerializeField] private bool isMoving;
 
     [SerializeField] private GameObject playerBody;
     [SerializeField] private GameObject playerCompanion;
@@ -82,7 +83,17 @@ public class PlayerManager : MonoBehaviour
     public PlayerWorldState getWorldState()
     {
         return playerWorldState;
-    }   
+    }
+
+    public bool getMovementState()
+    {
+        return isMoving;
+    }
+
+    private void Update()
+    {
+        isMoving = playerMovement.isMoving();
+    }
 
     public void pausePlayer(bool _shouldPause, bool _shouldHide)
     {

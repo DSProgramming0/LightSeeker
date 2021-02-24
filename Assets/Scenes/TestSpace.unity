@@ -1484,13 +1484,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.336
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 2.1442175
   MaxDistance: 500
@@ -8657,7 +8657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tab
+  m_text: 'Controls
 
 '
   m_isRightToLeft: 0
@@ -8733,7 +8733,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 265745238}
-    characterCount: 4
+    characterCount: 9
     spriteCount: 0
     spaceCount: 1
     wordCount: 1
@@ -11695,9 +11695,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tab
-
-'
+  m_text: Other
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9573e46029d8758458bcdf2728481af5, type: 2}
   m_sharedMaterial: {fileID: -8330073081987829218, guid: 9573e46029d8758458bcdf2728481af5, type: 2}
@@ -11771,9 +11769,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 521879079}
-    characterCount: 4
+    characterCount: 5
     spriteCount: 0
-    spaceCount: 1
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -12972,7 +12970,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617308912}
-  m_LocalRotation: {x: 0.017005147, y: 0.41865113, z: -0.007840953, w: 0.9079541}
+  m_LocalRotation: {x: 0.017005133, y: 0.4186511, z: -0.007840944, w: 0.9079541}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -13334,7 +13332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0009765625, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0.0009765625, y: -0.00012207031}
   m_SizeDelta: {x: -0.001953125, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &644995300
@@ -13869,8 +13867,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.1793823, y: 416.00012}
-  m_SizeDelta: {x: -622.79443, y: -1023.18756}
+  m_AnchoredPosition: {x: 0, y: 410}
+  m_SizeDelta: {x: -871.5802, y: -1023.18756}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &672762170
 CanvasRenderer:
@@ -14390,7 +14388,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 703088445}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -16530,7 +16528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tab
+  m_text: 'Audio
 
 '
   m_isRightToLeft: 0
@@ -16606,7 +16604,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 878030747}
-    characterCount: 4
+    characterCount: 6
     spriteCount: 0
     spaceCount: 1
     wordCount: 1
@@ -17321,8 +17319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1171.6179, y: -50}
-  m_SizeDelta: {x: 251.1, y: 61.8}
+  m_AnchoredPosition: {x: 1103.8179, y: -50}
+  m_SizeDelta: {x: 219.6, y: 57.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921120745
 MonoBehaviour:
@@ -17338,9 +17336,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1168983744}
   backgroundImage: {fileID: 0}
-  idleColor: {r: 1, g: 0.72156864, b: 0.8980392, a: 1}
-  hoverColor: {r: 1, g: 0.8726415, b: 0.9533617, a: 1}
-  pressedColor: {r: 0.6603774, g: 0.4267533, b: 0.5748249, a: 1}
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  pressedColor: {r: 1, g: 0.43189976, b: 0, a: 1}
   onTabSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -17360,7 +17358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.72156864, b: 0.8980392, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17602,7 +17600,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 648.61786, y: -50}
-  m_SizeDelta: {x: 251.1, y: 61.8}
+  m_SizeDelta: {x: 219.6, y: 57.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &941243514
 MonoBehaviour:
@@ -17618,9 +17616,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1168983744}
   backgroundImage: {fileID: 0}
-  idleColor: {r: 0.7490196, g: 0.972549, b: 0.93333334, a: 1}
-  hoverColor: {r: 0.9009434, g: 1, b: 0.98262167, a: 1}
-  pressedColor: {r: 0.3448291, g: 0.5943396, b: 0.55056584, a: 1}
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  pressedColor: {r: 1, g: 0.43189976, b: 0, a: 1}
   onTabSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -17640,7 +17638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7490196, g: 0.972549, b: 0.93333334, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -20665,9 +20663,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tab
-
-'
+  m_text: Collectibles
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9573e46029d8758458bcdf2728481af5, type: 2}
   m_sharedMaterial: {fileID: -8330073081987829218, guid: 9573e46029d8758458bcdf2728481af5, type: 2}
@@ -20697,8 +20693,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30.72
+  m_fontSizeBase: 30.72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -20741,9 +20737,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1164235098}
-    characterCount: 4
+    characterCount: 12
     spriteCount: 0
-    spaceCount: 1
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -20894,10 +20890,10 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 251.1, y: 61.8}
-  m_Spacing: {x: 10.4, y: 0}
+  m_CellSize: {x: 219.6, y: 57.3}
+  m_Spacing: {x: 8, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 7
 --- !u!114 &1168983744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20918,6 +20914,7 @@ MonoBehaviour:
   - {fileID: 1523184609}
   - {fileID: 365940969}
   - {fileID: 1338684009}
+  index: 0
   clickAudioSouce: {fileID: 239924750}
   clickSoundEffect: {fileID: 8300000, guid: e2a486a40da74fc4789abded3f98e94b, type: 3}
 --- !u!1001 &1169467594
@@ -21294,8 +21291,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 387.11786, y: -50}
-  m_SizeDelta: {x: 251.1, y: 61.8}
+  m_AnchoredPosition: {x: 421.01788, y: -50}
+  m_SizeDelta: {x: 219.6, y: 57.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1225285347
 MonoBehaviour:
@@ -21311,9 +21308,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1168983744}
   backgroundImage: {fileID: 0}
-  idleColor: {r: 0.8509804, g: 0.6784314, b: 0.3019608, a: 1}
-  hoverColor: {r: 0.9339623, g: 0.8245805, b: 0.58592916, a: 1}
-  pressedColor: {r: 0.5849056, g: 0.45744038, b: 0.17933428, a: 1}
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  pressedColor: {r: 1, g: 0.43189976, b: 0, a: 1}
   onTabSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -21333,7 +21330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8509804, g: 0.6784314, b: 0.3019608, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -21719,9 +21716,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsSource: {fileID: 239924750}
   MusicSource: {fileID: 2058068572}
+  footstepSource: {fileID: 113384114}
   LowPitchRange: 0.95
   HighPitchRange: 1.05
   smoothValue: 2
+  footSteps:
+  - {fileID: 8300000, guid: 7f70688564cdac74fa521bbc6acb779d, type: 3}
+  - {fileID: 8300000, guid: ad60daef84b59664d96d25ea040fed4e, type: 3}
+  - {fileID: 8300000, guid: 19c69d9699c3ddc40bb6c5e78d8c24fa, type: 3}
+  - {fileID: 8300000, guid: 516e2dfd140b2b9499c1988b390863b9, type: 3}
+  - {fileID: 8300000, guid: 7fbe869989b8241409b0611c3d69a3da, type: 3}
+  - {fileID: 8300000, guid: 55f6520907ef642418f0b207f4fd8706, type: 3}
+  - {fileID: 8300000, guid: bcfa28a21f64e0843a09586bfd2d9ed1, type: 3}
 --- !u!114 &1241752974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22873,7 +22879,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305018672}
-  m_LocalRotation: {x: 0.017005147, y: 0.41865113, z: -0.007840953, w: 0.9079541}
+  m_LocalRotation: {x: 0.017005133, y: 0.4186511, z: -0.007840944, w: 0.9079541}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -23612,7 +23618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tab
+  m_text: 'Display
 
 '
   m_isRightToLeft: 0
@@ -23688,7 +23694,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1377158495}
-    characterCount: 4
+    characterCount: 8
     spriteCount: 0
     spaceCount: 1
     wordCount: 1
@@ -26019,7 +26025,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Helloo
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d7f72e1c0a8c074fb8f9e221e0a88ad, type: 2}
   m_sharedMaterial: {fileID: 949828066299296274, guid: 4d7f72e1c0a8c074fb8f9e221e0a88ad, type: 2}
@@ -26093,13 +26099,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.32589066, z: 0.38096583, w: 0.3401667}
   m_textInfo:
     textComponent: {fileID: 1551774898}
-    characterCount: 6
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -27707,7 +27713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7311321, b: 0.7311321, a: 1}
+  m_Color: {r: 1, g: 0.43137255, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -28097,8 +28103,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 910.11786, y: -50}
-  m_SizeDelta: {x: 251.1, y: 61.8}
+  m_AnchoredPosition: {x: 876.21783, y: -50}
+  m_SizeDelta: {x: 219.6, y: 57.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1685802964
 MonoBehaviour:
@@ -28114,9 +28120,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1168983744}
   backgroundImage: {fileID: 0}
-  idleColor: {r: 0.64705884, g: 1, b: 0.7019608, a: 1}
-  hoverColor: {r: 0.8066038, g: 1, b: 0.8366876, a: 1}
-  pressedColor: {r: 0.253649, g: 0.5660378, b: 0.3022428, a: 1}
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  pressedColor: {r: 1, g: 0.43189976, b: 0, a: 1}
   onTabSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -28136,7 +28142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.64705884, g: 1, b: 0.7019608, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -28314,7 +28320,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.01700515, y: 0.41865113, z: -0.007840954, w: 0.9079541}
+  m_LocalRotation: {x: 0.017005133, y: 0.4186511, z: -0.007840944, w: 0.9079541}
   m_LocalPosition: {x: -3.547116, y: 3.3143804, z: -7.4121404}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -28975,6 +28981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainvCam: {fileID: 1045489374}
+  isMoving: 0
   playerBody: {fileID: 919132147642429773}
   playerCompanion: {fileID: 473711195}
   playerLookatTarget: {fileID: 893325409}
@@ -28988,12 +28995,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715952410}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 285a50c786e0f3d478415f36bf78927b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f42bd2320e546b4482e9655e437c8c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayLength: 1
+  soundManager: {fileID: 1241752973}
+  playerManager: {fileID: 0}
 --- !u!1 &1718736092
 GameObject:
   m_ObjectHideFlags: 0
@@ -29714,7 +29722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.2009888, y: -44.19989}
+  m_AnchoredPosition: {x: -1.2009277, y: -44.19983}
   m_SizeDelta: {x: -622.75134, y: -255.2685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1761823264
@@ -30536,8 +30544,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125.617874, y: -50}
-  m_SizeDelta: {x: 251.1, y: 61.8}
+  m_AnchoredPosition: {x: 193.41786, y: -50}
+  m_SizeDelta: {x: 219.6, y: 57.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1807665253
 MonoBehaviour:
@@ -30553,9 +30561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1168983744}
   backgroundImage: {fileID: 0}
-  idleColor: {r: 1, g: 0.7294118, b: 0.7294118, a: 1}
-  hoverColor: {r: 1, g: 0.8443396, b: 0.8443396, a: 1}
-  pressedColor: {r: 0.6509434, g: 0.45136172, b: 0.45136172, a: 1}
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  pressedColor: {r: 1, g: 0.43189976, b: 0, a: 1}
   onTabSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -30575,7 +30583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7294118, b: 0.7294118, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -33836,7 +33844,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: bedb654249d3aa5469d4ca62ec941184, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -35266,7 +35274,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6551636096771790095}
-  m_LocalRotation: {x: 0.03512001, y: -0.01791361, z: 0.010341883, w: 0.99916905}
+  m_LocalRotation: {x: 0.03512001, y: -0.01791361, z: 0.010341687, w: 0.99916905}
   m_LocalPosition: {x: -4.668224e-14, y: 0.16134231, z: -0.000000013038516}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -35509,15 +35517,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 521584669416123710, guid: 0101bc4cfcecec849a6752f14901c44b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0013676458
+      value: -0.0013676401
       objectReference: {fileID: 0}
     - target: {fileID: 521584669416123710, guid: 0101bc4cfcecec849a6752f14901c44b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.10087368
+      value: -0.100873634
       objectReference: {fileID: 0}
     - target: {fileID: 521584669416123710, guid: 0101bc4cfcecec849a6752f14901c44b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.013487596
+      value: -0.013487545
       objectReference: {fileID: 0}
     - target: {fileID: 521584669713241612, guid: 0101bc4cfcecec849a6752f14901c44b, type: 3}
       propertyPath: m_Name
@@ -37350,14 +37358,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4667187127501491490}
-  m_LocalRotation: {x: 0.0050203498, y: -0.017323194, z: 0.011577233, w: 0.99977034}
+  m_LocalRotation: {x: 0.0022919201, y: 0.20766106, z: 0.012409011, w: 0.9781195}
   m_LocalPosition: {x: 3.121498e-14, y: 0.04186833, z: 0.010199929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7468114972291521302}
   m_Father: {fileID: 106197448563947191}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.038, y: 23.972, z: 1.446}
 --- !u!4 &5064679190202374330
 Transform:
   m_ObjectHideFlags: 0

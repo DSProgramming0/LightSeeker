@@ -9,38 +9,39 @@ public class TabGroup : MonoBehaviour
 
     public TabButton selectedTab;
     public List<GameObject> objectsToSwap;
+    [SerializeField] private int index;
 
     [Header("Audio")]
     [SerializeField] private AudioSource clickAudioSouce;
     [SerializeField] private AudioClip clickSoundEffect;
 
-    public void Subscribe(TabButton button)
+    public void Subscribe(TabButton button) //Called by each tabButton on start to add them to a new list of TabButtons
     {
         if(tabButtons == null)
         {
-            tabButtons = new List<TabButton>();
+            tabButtons = new List<TabButton>(); //Create new List of TabButtons
         }
 
-        tabButtons.Add(button);
+        tabButtons.Add(button); //Add tabButtons that call this method and are passed as an argument
     }
 
-    public void OnTabEnter(TabButton button)
+    public void OnTabEnter(TabButton button) //When the mouse hovers over a tab button
     {
         ResetTabs();
         if(selectedTab == null || button != selectedTab)
         {
-            button.backgroundImage.color = button.hoverColor;
+            button.backgroundImage.color = button.hoverColor; //swap color to hover color
         }
     }
 
-    public void OnTabExit(TabButton button)
+    public void OnTabExit(TabButton button) //reset color when mouse has left tab button area
     {
         ResetTabs();
     }
 
-    public void OnTabSelected(TabButton button)
+    public void OnTabSelected(TabButton button) //When a tab button is pressed down
     {
-        if(selectedTab != button)
+        if(selectedTab != button) //Only if the selected tab is not equal to the tab being selected
         {
             if (selectedTab != null)
             {
@@ -56,8 +57,8 @@ public class TabGroup : MonoBehaviour
             button.backgroundImage.color = button.pressedColor;
             clickAudioSouce.PlayOneShot(clickSoundEffect);
 
-            int index = button.transform.GetSiblingIndex();
-            for (int i = 0; i < objectsToSwap.Count; i++)
+            index = button.transform.GetSiblingIndex();
+            for (int i = 0; i < objectsToSwap.Count; i++) //cycles through list of pages and sets the corresponding page
             {
                 if (i == index)
                 {
@@ -69,9 +70,23 @@ public class TabGroup : MonoBehaviour
                 }
             }
         }       
+    }   
+
+    public void cyclePage(bool _shouldIncrement) //Need to finish, button cycling
+    {
+        if (_shouldIncrement)
+        {
+            index++;
+        }
+        else
+        {
+            index--;
+        }
+
+        OnTabSelected(selectedTab);
     }
 
-    public void ResetTabs()
+    public void ResetTabs() //resets buttons that are not selected or being hovered
     {
         foreach(TabButton button in tabButtons)
         {

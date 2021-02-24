@@ -48,4 +48,22 @@ public class GameEvents : MonoBehaviour
             onCompanionChanged();
         }
     }
+
+    public event Action onGamePause; //1 suscriber on gameManager, called on game pause
+    public void GamePause()
+    {
+        if (onGamePause != null)
+        {
+            onGamePause();
+        }
+    }
+
+    public event Action onGameResume; //1 suscriber on gameManager, called on game resume
+    public void GameResume()
+    {
+        if (onGameResume != null)
+        {
+            onGameResume();
+        }
+    }
 }

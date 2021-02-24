@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Attach the script to the off screen indicator panel.
@@ -13,6 +14,7 @@ public class OffScreenIndicator : MonoBehaviour
     [Range(0.5f, 0.9f)]
     [Tooltip("Distance offset of the indicators from the centre of the screen")]
     [SerializeField] private float screenBoundOffset = 0.9f;
+    [SerializeField] private Image targetIcon;
 
     private Camera mainCamera;
     private Vector3 screenCentre;
@@ -55,8 +57,7 @@ public class OffScreenIndicator : MonoBehaviour
     /// Draw the indicators on the screen and set thier position and rotation and other properties.
     /// </summary>
     void DrawIndicators()
-    {
-       
+    {       
             Vector3 screenPosition = OffScreenIndicatorCore.GetScreenPosition(mainCamera, target.transform.position);
             bool isTargetVisible = OffScreenIndicatorCore.IsTargetVisible(screenPosition);
             float distanceFromCamera = target.NeedDistanceText ? target.GetDistanceFromCamera(mainCamera.transform.position) : float.MinValue;// Gets the target distance from the camera.

@@ -185,7 +185,20 @@ public class PlayerMovement : MonoBehaviour
 
             animHook.setSpeed(speed);
         }
-    }   
+    }
+
+    public bool isMoving()
+    {
+        if(dir == Vector3.zero)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
 
     public void stopMovement(bool _stopPlayer) //Controls player movement
     {

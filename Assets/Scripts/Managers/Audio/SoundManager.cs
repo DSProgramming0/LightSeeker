@@ -6,13 +6,15 @@ public class SoundManager : MonoBehaviour
 {
     // Audio players components.
     public AudioSource EffectsSource;
-    public AudioSource MusicSource;   
+    public AudioSource MusicSource;
+    public AudioSource footstepSource;
 
     // Random pitch adjustment range.
     public float LowPitchRange = .95f;
     public float HighPitchRange = 1.05f;
 
     [SerializeField] private float smoothValue;
+    [SerializeField] private List<AudioClip> footSteps;
 
     // Singleton instance.
     public static SoundManager Instance = null;
@@ -95,6 +97,27 @@ public class SoundManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void Step(bool isLanding)
+    {
+        AudioClip clip = getRandomFootstep();
+
+        if (!isLanding)
+        {
+            footstepSource.PlayOneShot(clip);
+
+        }
+        else
+        {
+            footstepSource.PlayOneShot(footSteps[4]);
+
+        }
+    }
+
+    public AudioClip getRandomFootstep()
+    {
+        return footSteps[Random.Range(0, footSteps.Count - 1)];
     }
 
     //private void blendTransition(bool _blendDown)
